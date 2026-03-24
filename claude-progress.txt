@@ -1,0 +1,3 @@
+目标：基于刚写完的本地博客代码，创建远程 GitHub 仓库并完成初始化推送。
+当前状态：已生成 long-running-harness 所需的基础工件（feature_list.json, init.bat）。
+下一步：执行基础 Git 提交，探索使用 API 或引导式方式创建远程仓库。

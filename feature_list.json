@@ -1,0 +1,30 @@
+[
+  {
+    "category": "functional",
+    "description": "Ensure clean Git history and baseline commit",
+    "steps": [
+      "git init",
+      "git add .",
+      "git commit -m \"Initial baseline commit\""
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Create GitHub remote repository",
+    "steps": [
+      "Find alternative API method or wait for user to configure GitHub repo",
+      "git remote add origin <URL>"
+    ],
+    "passes": false
+  },
+  {
+    "category": "functional",
+    "description": "Push to remote repository",
+    "steps": [
+      "git branch -M main",
+      "git push -u origin main"
+    ],
+    "passes": false
+  }
+]
