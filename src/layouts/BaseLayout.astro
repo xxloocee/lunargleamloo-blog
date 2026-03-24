@@ -1,0 +1,61 @@
+---
+import { SITE_CONFIG } from '~/lib/constants';
+import Header from '~/components/Header.astro';
+import Footer from '~/components/Footer.astro';
+import SeoHead from '~/components/SeoHead.astro';
+import '~/styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  type?: string;
+}
+
+const {
+  title = SITE_CONFIG.title,
+  description = SITE_CONFIG.description,
+  image,
+  type = 'website',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang={SITE_CONFIG.locale} data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="alternate" type="application/rss+xml" title={SITE_CONFIG.title} href="/rss.xml" />
+    <SeoHead title={title} description={description} image={image} type={type} />
+    <script is:inline>
+      // 深色模式：渲染前执行，避免闪烁
+      (function () {
+        const saved = localStorage.getItem('theme');
+        if (saved) {
+          document.documentElement.setAttribute('data-theme', saved);
+        } else if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+          document.documentElement.setAttribute('data-theme', 'light');
+        }
+      })();
+    </script>
+  </head>
+  <body class="relative">
+    <!-- 动态光球背景 -->
+    <div class="orb orb-1" aria-hidden="true"></div>
+    <div class="orb orb-2" aria-hidden="true"></div>
+    <div class="orb orb-3" aria-hidden="true"></div>
+
+    <div class="relative z-10 min-h-screen flex flex-col">
+      <Header />
+      <slot />
+      <Footer />
+    </div>
+  </body>
+</html>

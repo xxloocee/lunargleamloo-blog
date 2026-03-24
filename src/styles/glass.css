@@ -1,0 +1,290 @@
+/* 玻璃拟态设计系统 - CSS 变量令牌 */
+
+:root {
+  /* Glass 基础令牌 */
+  --glass-blur: 16px;
+  --glass-bg: rgba(255, 255, 255, 0.12);
+  --glass-bg-hover: rgba(255, 255, 255, 0.18);
+  --glass-border: 1px solid rgba(255, 255, 255, 0.2);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  --glass-radius: 16px;
+  --glass-saturate: 180%;
+
+  /* 表面层级 */
+  --glass-layer-1: rgba(255, 255, 255, 0.08);
+  --glass-layer-2: rgba(255, 255, 255, 0.12);
+  --glass-layer-3: rgba(255, 255, 255, 0.20);
+
+  /* 背景渐变 */
+  --bg-gradient-from: #0f0c29;
+  --bg-gradient-via: #302b63;
+  --bg-gradient-to: #24243e;
+
+  /* 文字颜色 */
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.7);
+  --text-tertiary: rgba(255, 255, 255, 0.5);
+
+  /* 强调色 */
+  --accent-primary: #a78bfa;
+  --accent-secondary: #67e8f9;
+  --accent-gradient: linear-gradient(135deg, #a78bfa, #67e8f9);
+}
+
+[data-theme="dark"] {
+  --glass-bg: rgba(0, 0, 0, 0.25);
+  --glass-bg-hover: rgba(0, 0, 0, 0.35);
+  --glass-border: 1px solid rgba(255, 255, 255, 0.1);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  --glass-layer-1: rgba(0, 0, 0, 0.15);
+  --glass-layer-2: rgba(0, 0, 0, 0.25);
+  --glass-layer-3: rgba(0, 0, 0, 0.40);
+
+  --bg-gradient-from: #0a0a1a;
+  --bg-gradient-via: #1a1a2e;
+  --bg-gradient-to: #16213e;
+
+  --text-primary: #e2e8f0;
+  --text-secondary: rgba(226, 232, 240, 0.7);
+  --text-tertiary: rgba(226, 232, 240, 0.4);
+
+  --accent-primary: #c4b5fd;
+  --accent-secondary: #a5f3fc;
+}
+
+/* ========== 全局基础样式 ========== */
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  background: linear-gradient(
+    135deg,
+    var(--bg-gradient-from) 0%,
+    var(--bg-gradient-via) 50%,
+    var(--bg-gradient-to) 100%
+  );
+  background-attachment: fixed;
+  color: var(--text-primary);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ========== Glass 组件类 ========== */
+
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  border: var(--glass-border);
+  border-radius: var(--glass-radius);
+  box-shadow: var(--glass-shadow);
+}
+
+.glass-sm {
+  background: var(--glass-layer-1);
+  backdrop-filter: blur(12px) saturate(160%);
+  -webkit-backdrop-filter: blur(12px) saturate(160%);
+  border: var(--glass-border);
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.glass-lg {
+  background: var(--glass-layer-3);
+  backdrop-filter: blur(20px) saturate(200%);
+  -webkit-backdrop-filter: blur(20px) saturate(200%);
+  border: var(--glass-border);
+  border-radius: 20px;
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.15);
+}
+
+.glass-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-hover:hover {
+  background: var(--glass-bg-hover);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+}
+
+/* ========== 动态光球 ========== */
+
+.orb {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.4;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.orb-1 {
+  width: 400px;
+  height: 400px;
+  background: var(--accent-primary);
+  top: -10%;
+  right: -5%;
+  animation: float-1 20s ease-in-out infinite;
+}
+
+.orb-2 {
+  width: 300px;
+  height: 300px;
+  background: var(--accent-secondary);
+  bottom: -5%;
+  left: -5%;
+  animation: float-2 25s ease-in-out infinite;
+}
+
+.orb-3 {
+  width: 200px;
+  height: 200px;
+  background: #f472b6;
+  top: 50%;
+  left: 50%;
+  animation: float-3 18s ease-in-out infinite;
+}
+
+@keyframes float-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(-30px, 50px) scale(1.1); }
+  66% { transform: translate(20px, -20px) scale(0.9); }
+}
+
+@keyframes float-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(40px, -30px) scale(1.05); }
+  66% { transform: translate(-20px, 40px) scale(0.95); }
+}
+
+@keyframes float-3 {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); }
+  50% { transform: translate(-50%, -50%) scale(1.2); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orb {
+    animation: none !important;
+  }
+  .glass-hover:hover {
+    transform: none;
+  }
+}
+
+/* ========== 链接与交互 ========== */
+
+a {
+  color: var(--accent-secondary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--accent-primary);
+}
+
+/* ========== 文章内容排版 ========== */
+
+.prose {
+  color: var(--text-primary);
+  max-width: 72ch;
+}
+
+.prose h1, .prose h2, .prose h3, .prose h4 {
+  color: var(--text-primary);
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.prose h1 { font-size: 2.25rem; margin: 2rem 0 1rem; }
+.prose h2 { font-size: 1.75rem; margin: 1.75rem 0 0.75rem; }
+.prose h3 { font-size: 1.375rem; margin: 1.5rem 0 0.5rem; }
+
+.prose p {
+  margin: 1rem 0;
+  color: var(--text-secondary);
+}
+
+.prose a {
+  color: var(--accent-secondary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.prose code {
+  background: var(--glass-layer-1);
+  padding: 0.15em 0.4em;
+  border-radius: 6px;
+  font-size: 0.875em;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+.prose pre {
+  background: var(--glass-layer-3);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: var(--glass-border);
+  border-radius: 12px;
+  padding: 1.25rem;
+  overflow-x: auto;
+  margin: 1.5rem 0;
+}
+
+.prose pre code {
+  background: none;
+  padding: 0;
+}
+
+.prose blockquote {
+  border-left: 3px solid var(--accent-primary);
+  padding-left: 1rem;
+  color: var(--text-tertiary);
+  font-style: italic;
+  margin: 1.5rem 0;
+}
+
+.prose ul, .prose ol {
+  margin: 1rem 0;
+  padding-left: 1.5rem;
+  color: var(--text-secondary);
+}
+
+.prose li {
+  margin: 0.25rem 0;
+}
+
+.prose img {
+  border-radius: 12px;
+  margin: 1.5rem 0;
+}
+
+.prose hr {
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin: 2rem 0;
+}
+
+/* ========== 滚动条美化 ========== */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}

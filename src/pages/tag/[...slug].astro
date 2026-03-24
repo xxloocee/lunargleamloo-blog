@@ -1,0 +1,39 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { formatDate } from '~/lib/utils';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  const tags = [...new Set(posts.flatMap((p) => p.data.tags))];
+  return tags.map((tag) => ({
+    params: { slug: tag },
+    props: { tag },
+  }));
+}
+
+const { tag } = Astro.props;
+const allPosts = await getCollection('blog');
+const posts = allPosts
+  .filter((p) => !p.data.draft && p.data.tags.includes(tag))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<BaseLayout title={`标签: #${tag} | My Blog`}>
+  <main class="flex-1 w-full max-w-4xl mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-2" style="font-family: 'Noto Serif SC', serif;">
+      #{tag}
+    </h1>
+    <p class="mb-8" style="color: var(--text-secondary);">共 {posts.length} 篇文章</p>
+
+    <div class="space-y-4">
+      {posts.map((post) => (
+        <a href={`/blog/${post.id}`} class="glass glass-hover p-6 block">
+          <time class="text-xs" style="color: var(--text-tertiary);">{formatDate(post.data.pubDate)}</time>
+          <h2 class="text-xl font-semibold mt-1 mb-2">{post.data.title}</h2>
+          <p class="text-sm" style="color: var(--text-secondary);">{post.data.description}</p>
+        </a>
+      ))}
+    </div>
+  </main>
+</BaseLayout>

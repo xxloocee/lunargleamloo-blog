@@ -1,0 +1,42 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { formatDate } from '~/lib/utils';
+
+const posts = (await getCollection('blog'))
+  .filter((p) => !p.data.draft)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+// 按年月分组
+const grouped: Record<string, typeof posts> = {};
+for (const post of posts) {
+  const year = post.data.pubDate.getFullYear();
+  const month = post.data.pubDate.getMonth() + 1;
+  const key = `${year} 年 ${String(month).padStart(2, '0')} 月`;
+  if (!grouped[key]) grouped[key] = [];
+  grouped[key].push(post);
+}
+---
+
+<BaseLayout title="归档 | My Blog">
+  <main class="flex-1 w-full max-w-4xl mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-8" style="font-family: 'Noto Serif SC', serif;">归档</h1>
+    <p class="mb-8" style="color: var(--text-secondary);">共 {posts.length} 篇文章</p>
+
+    {Object.entries(grouped).map(([month, monthPosts]) => (
+      <div class="mb-8">
+        <h2 class="text-xl font-bold mb-4" style="color: var(--accent-primary);">{month}</h2>
+        <div class="space-y-3">
+          {monthPosts.map((post) => (
+            <a href={`/blog/${post.id}`} class="glass-sm glass-hover p-4 flex items-center gap-4 block">
+              <time class="text-xs whitespace-nowrap" style="color: var(--text-tertiary);">
+                {formatDate(post.data.pubDate)}
+              </time>
+              <span class="font-medium">{post.data.title}</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    ))}
+  </main>
+</BaseLayout>

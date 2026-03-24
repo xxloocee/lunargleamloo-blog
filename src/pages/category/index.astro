@@ -1,0 +1,32 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+
+const posts = await getCollection('blog');
+const categories = [...new Set(posts.flatMap((p) => p.data.categories))];
+
+// 统计每个分类的文章数
+const categoryCounts: Record<string, number> = {};
+for (const cat of categories) {
+  categoryCounts[cat] = posts.filter((p) => p.data.categories.includes(cat)).length;
+}
+---
+
+<BaseLayout title="分类 | My Blog">
+  <main class="flex-1 w-full max-w-4xl mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-8" style="font-family: 'Noto Serif SC', serif;">分类</h1>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      {categories.map((cat) => (
+        <a
+          href={`/category/${cat}`}
+          class="glass glass-hover p-6 block text-center"
+        >
+          <h2 class="text-lg font-semibold mb-2">{cat}</h2>
+          <span class="text-xs" style="color: var(--text-tertiary);">
+            {categoryCounts[cat]} 篇文章
+          </span>
+        </a>
+      ))}
+    </div>
+  </main>
+</BaseLayout>

@@ -1,0 +1,56 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { SITE_CONFIG } from '~/lib/constants';
+import { formatDate } from '~/lib/utils';
+
+const posts = (await getCollection('blog'))
+  .filter((p) => !p.data.draft)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 6);
+---
+
+<BaseLayout>
+  <main class="flex-1 w-full max-w-6xl mx-auto px-4 py-8">
+    <!-- Hero -->
+    <section class="glass p-8 md:p-12 mb-12 text-center">
+      <h1 class="text-4xl md:text-5xl font-bold mb-4" style="font-family: 'Noto Serif SC', serif;">
+        {SITE_CONFIG.title}
+      </h1>
+      <p class="text-lg mb-6" style="color: var(--text-secondary);">
+        {SITE_CONFIG.description}
+      </p>
+      <a href="/blog" class="glass-sm inline-block px-8 py-3 glass-hover">
+        浏览全部文章 →
+      </a>
+    </section>
+
+    <!-- 最新文章 -->
+    <section>
+      <h2 class="text-2xl font-bold mb-6" style="font-family: 'Noto Serif SC', serif;">最新文章</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {posts.map((post) => (
+          <a href={`/blog/${post.id}`} class="glass glass-hover p-6 block">
+            <div class="flex flex-wrap gap-2 mb-3">
+              {post.data.categories.map((cat) => (
+                <span
+                  class="text-xs px-2 py-0.5 rounded-full"
+                  style="background: var(--accent-primary); color: #fff;"
+                >
+                  {cat}
+                </span>
+              ))}
+            </div>
+            <h3 class="text-lg font-semibold mb-2">{post.data.title}</h3>
+            <p class="text-sm mb-3" style="color: var(--text-secondary);">
+              {post.data.description}
+            </p>
+            <time class="text-xs" style="color: var(--text-tertiary);">
+              {formatDate(post.data.pubDate)}
+            </time>
+          </a>
+        ))}
+      </div>
+    </section>
+  </main>
+</BaseLayout>

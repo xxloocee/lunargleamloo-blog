@@ -1,0 +1,24 @@
+---
+import PageLayout from '~/layouts/PageLayout.astro';
+import { SITE_CONFIG } from '~/lib/constants';
+---
+
+<PageLayout title="关于我" description="了解更多关于我的信息">
+  <div class="flex flex-col items-center text-center mb-8">
+    <div class="w-24 h-24 rounded-full glass mb-4 flex items-center justify-center text-3xl">
+      🧑‍💻
+    </div>
+    <h2 class="text-2xl font-bold mb-2">{SITE_CONFIG.author.name}</h2>
+    <p style="color: var(--text-secondary);">{SITE_CONFIG.author.bio}</p>
+  </div>
+
+  <hr class="my-8" style="border-color: rgba(255,255,255,0.1);" />
+
+  <p>这是关于页的占位内容。请在此处填写你的个人介绍、技术栈、职业经历等信息。</p>
+
+  <h2>联系方式</h2>
+  <ul>
+    <li>GitHub: <a href={SITE_CONFIG.author.social.github} target="_blank">{SITE_CONFIG.author.social.github}</a></li>
+    <li>邮箱: <a href={`mailto:${SITE_CONFIG.author.email}`}>{SITE_CONFIG.author.email}</a></li>
+  </ul>
+</PageLayout>

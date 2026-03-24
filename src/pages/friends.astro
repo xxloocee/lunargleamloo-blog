@@ -1,0 +1,28 @@
+---
+import PageLayout from '~/layouts/PageLayout.astro';
+
+const friends = [
+  { name: '示例友链 1', url: 'https://example.com', description: '一个很棒的博客' },
+  { name: '示例友链 2', url: 'https://example.org', description: '另一个优秀的博客' },
+];
+---
+
+<PageLayout title="友链" description="我的朋友们">
+  <p class="mb-8" style="color: var(--text-secondary);">
+    以下是与我互链的朋友们，他们的博客都很值得一读。
+  </p>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    {friends.map((friend) => (
+      <a
+        href={friend.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="glass glass-hover p-5 block"
+      >
+        <h3 class="text-lg font-semibold mb-1">{friend.name}</h3>
+        <p class="text-sm" style="color: var(--text-secondary);">{friend.description}</p>
+      </a>
+    ))}
+  </div>
+</PageLayout>
