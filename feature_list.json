@@ -7,7 +7,7 @@
       "git add .",
       "git commit -m \"Initial baseline commit\""
     ],
-    "passes": false
+    "passes": true
   },
   {
     "category": "functional",
@@ -16,7 +16,7 @@
       "Find alternative API method or wait for user to configure GitHub repo",
       "git remote add origin <URL>"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "category": "functional",
