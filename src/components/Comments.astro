@@ -1,22 +1,27 @@
 ---
-import { SITE_CONFIG } from '~/lib/constants';
+import { SITE_CONFIG } from "~/lib/constants";
 
 interface Props {
   term?: string;
 }
 
-const { term = '' } = Astro.props;
+const { term = "" } = Astro.props;
 ---
 
 <section class="mt-12">
-  <h2 class="text-xl font-bold mb-4" style="font-family: 'Noto Serif SC', serif;">评论</h2>
+  <h2
+    class="text-xl font-bold mb-4"
+    style="font-family: 'Noto Serif SC', serif;"
+  >
+    评论
+  </h2>
   <div class="glass p-6">
     <script
       src="https://giscus.app/client.js"
-      data-repo="loocee/my-blog"
-      data-repo-id="R_kgDOH-s37Q"
+      data-repo="xxloocee/my-blog"
+      data-repo-id="R_kgDORvmyTA"
       data-category="General"
-      data-category-id="DIC_kwDOH-s37c4C_99e"
+      data-category-id="DIC_kwDORvmyTM4C5Ll_"
       data-mapping="pathname"
       data-strict="0"
       data-reactions-enabled="1"
@@ -25,7 +30,6 @@ const { term = '' } = Astro.props;
       data-theme="dark_dimmed"
       data-lang="zh-CN"
       crossorigin="anonymous"
-      async
-    ></script>
+      async></script>
   </div>
 </section>
