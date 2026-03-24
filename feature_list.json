@@ -25,6 +25,15 @@
       "git branch -M main",
       "git push -u origin main"
     ],
-    "passes": false
+    "passes": true
+  },
+  {
+    "category": "functional",
+    "description": "Integrate Giscus comment system",
+    "steps": [
+      "Configure Giscus App on GitHub",
+      "Update Comments.astro with repo-id and category-id"
+    ],
+    "passes": true
   }
 ]
