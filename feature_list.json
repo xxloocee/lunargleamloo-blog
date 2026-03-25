@@ -35,5 +35,14 @@
       "Update Comments.astro with repo-id and category-id"
     ],
     "passes": true
+  },
+  {
+    "category": "functional",
+    "description": "Fix Cloudflare build error (ignore .wrangler)",
+    "steps": [
+      "Add .wrangler to .gitignore",
+      "Remove .wrangler from git cache"
+    ],
+    "passes": true
   }
 ]
