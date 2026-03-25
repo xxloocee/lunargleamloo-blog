@@ -53,5 +53,15 @@
       "Ensure Astro outputs to flat dist folder"
     ],
     "passes": true
+  },
+  {
+    "category": "functional",
+    "description": "Fix mobile search button interaction",
+    "steps": [
+      "Refactor SearchModal into Trigger and Modal components",
+      "Update Header to use single Modal instance",
+      "Bind all triggers via class selector"
+    ],
+    "passes": true
   }
 ]

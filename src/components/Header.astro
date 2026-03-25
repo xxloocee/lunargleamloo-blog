@@ -1,5 +1,6 @@
 ---
 import { SITE_CONFIG } from '~/lib/constants';
+import SearchTrigger from '~/components/SearchTrigger.astro';
 import SearchModal from '~/components/SearchModal.astro';
 
 const navLinks = [
@@ -25,7 +26,7 @@ const navLinks = [
           {link.label}
         </a>
       ))}
-      <SearchModal />
+      <SearchTrigger />
       <button
         id="dark-mode-toggle"
         class="text-lg hover:opacity-80 transition-opacity"
@@ -37,7 +38,7 @@ const navLinks = [
 
     <!-- 移动端菜单按钮 -->
     <div class="flex md:hidden items-center gap-3">
-      <SearchModal />
+      <SearchTrigger />
       <button
         id="dark-mode-toggle-mobile"
         class="text-lg"
@@ -63,6 +64,7 @@ const navLinks = [
       </a>
     ))}
   </div>
+  <SearchModal />
 </header>
 
 <script is:inline>

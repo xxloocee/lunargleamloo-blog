@@ -1,0 +1,19 @@
+---
+/* 搜索触发按钮组件
+ * 
+ * 2026-03-25: 创建独立触发器，解决 ID 冲突导致的移动端失效问题。
+ */
+---
+
+<button
+  class="search-trigger-btn glass-sm px-3 py-1.5 text-sm flex items-center gap-2 hover:opacity-80 transition-opacity"
+  aria-label="搜索文章"
+>
+  <span>🔍</span>
+  <span class="hidden sm:inline">搜索...</span>
+  <kbd
+    class="hidden sm:inline text-xs px-1.5 py-0.5 rounded"
+    style="background: var(--glass-layer-1); color: var(--text-tertiary);"
+    >⌘K</kbd
+  >
+</button>
