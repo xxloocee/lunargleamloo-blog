@@ -44,5 +44,14 @@
       "Remove .wrangler from git cache"
     ],
     "passes": true
+  },
+  {
+    "category": "functional",
+    "description": "Fix Cloudflare 404 by reverting to pure static build",
+    "steps": [
+      "Remove @astrojs/cloudflare adapter from config",
+      "Ensure Astro outputs to flat dist folder"
+    ],
+    "passes": true
   }
 ]
