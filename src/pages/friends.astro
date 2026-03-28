@@ -2,27 +2,192 @@
 import PageLayout from '~/layouts/PageLayout.astro';
 
 const friends = [
-  { name: '示例友链 1', url: 'https://example.com', description: '一个很棒的博客' },
-  { name: '示例友链 2', url: 'https://example.org', description: '另一个优秀的博客' },
+  {
+    author: 'shiqkuangsan',
+    org: 'antdv-next',
+    avatar: '🧩',
+    title: '当 AI 能写完整个项目，我们还需要组件库吗？',
+    url: 'https://mp.weixin.qq.com/s/-WDJzlHyMKFs22Ao0OjC3w',
+    platform: '微信公众号 · Antdv Next',
+    pubDate: '2026-03-27',
+    tags: ['AI', '组件库', '前端'],
+    summary: '从 Ant Design Vue 维护者的视角出发，探讨 AI 原生时代组件库的生存价值——代码生成只是冰山一角，API 契约、设计系统和品牌一致性才是不可替代的核心。',
+    recommendation: '一个组件库维护者的真诚自我拷问，视角独特，兼具技术深度和行业洞察。文中提出的"AI 是组件库最大用户"这一反直觉观点尤为精彩。',
+  },
 ];
 ---
 
 <PageLayout title="友链" description="我的朋友们">
-  <p class="mb-8" style="color: var(--text-secondary);">
-    以下是与我互链的朋友们，他们的博客都很值得一读。
+  <p class="mb-10" style="color: var(--text-secondary);">
+    来自朋友们的优质文章推荐，每一篇都值得细读。
   </p>
 
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+  <div class="friend-list">
     {friends.map((friend) => (
       <a
         href={friend.url}
         target="_blank"
         rel="noopener noreferrer"
-        class="glass glass-hover p-5 block"
+        class="friend-card glass"
       >
-        <h3 class="text-lg font-semibold mb-1">{friend.name}</h3>
-        <p class="text-sm" style="color: var(--text-secondary);">{friend.description}</p>
+        {/* 头部：作者信息 */}
+        <div class="friend-header">
+          <span class="friend-avatar">{friend.avatar}</span>
+          <div class="friend-meta">
+            <span class="friend-author">{friend.author}</span>
+            <span class="friend-org">@{friend.org}</span>
+          </div>
+          <span class="friend-platform">{friend.platform}</span>
+        </div>
+
+        {/* 文章标题 */}
+        <h3 class="friend-title">{friend.title}</h3>
+
+        {/* 文章摘要 */}
+        <p class="friend-summary">{friend.summary}</p>
+
+        {/* 推荐理由 */}
+        <div class="friend-rec">
+          <span class="friend-rec-label">推荐理由</span>
+          <p class="friend-rec-text">{friend.recommendation}</p>
+        </div>
+
+        {/* 底部：标签 + 日期 */}
+        <div class="friend-footer">
+          <div class="friend-tags">
+            {friend.tags.map((tag) => (
+              <span class="friend-tag">{tag}</span>
+            ))}
+          </div>
+          <time class="friend-date">{friend.pubDate}</time>
+        </div>
       </a>
     ))}
   </div>
 </PageLayout>
+
+<style>
+  .friend-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .friend-card {
+    display: block;
+    padding: 1.5rem;
+    text-decoration: none;
+    color: inherit;
+    transition: background 0.25s, transform 0.25s, box-shadow 0.25s;
+  }
+  .friend-card:hover {
+    background: var(--glass-bg-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+  }
+
+  /* 头部 */
+  .friend-header {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 1rem;
+  }
+  .friend-avatar {
+    font-size: 1.75rem;
+    line-height: 1;
+  }
+  .friend-meta {
+    display: flex;
+    flex-direction: column;
+  }
+  .friend-author {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+  .friend-org {
+    font-size: 0.8rem;
+    color: var(--accent-primary);
+  }
+  .friend-platform {
+    margin-left: auto;
+    font-size: 0.75rem;
+    color: var(--text-tertiary);
+    white-space: nowrap;
+  }
+
+  /* 标题 */
+  .friend-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1.4;
+    margin-bottom: 0.75rem;
+    color: var(--text-primary);
+  }
+  .friend-card:hover .friend-title {
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* 摘要 */
+  .friend-summary {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+  }
+
+  /* 推荐理由 */
+  .friend-rec {
+    padding: 0.85rem 1rem;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    background: var(--glass-layer-1);
+    border-left: 3px solid var(--accent-primary);
+  }
+  .friend-rec-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--accent-primary);
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+  .friend-rec-text {
+    font-size: 0.85rem;
+    line-height: 1.65;
+    color: var(--text-secondary);
+    margin: 0;
+  }
+
+  /* 底部 */
+  .friend-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+  .friend-tags {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+  }
+  .friend-tag {
+    font-size: 0.7rem;
+    padding: 0.15rem 0.55rem;
+    border-radius: 9999px;
+    background: var(--glass-layer-2);
+    color: var(--text-secondary);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .friend-date {
+    font-size: 0.75rem;
+    color: var(--text-tertiary);
+    white-space: nowrap;
+  }
+</style>
