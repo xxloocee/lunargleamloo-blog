@@ -28,7 +28,7 @@ const friends = [
         href={friend.url}
         target="_blank"
         rel="noopener noreferrer"
-        class="friend-card glass"
+        class="friend-card neo-card"
       >
         {/* 头部：作者信息 */}
         <div class="friend-header">
@@ -78,12 +78,11 @@ const friends = [
     padding: 1.5rem;
     text-decoration: none;
     color: inherit;
-    transition: background 0.25s, transform 0.25s, box-shadow 0.25s;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
   }
   .friend-card:hover {
-    background: var(--glass-bg-hover);
-    transform: translateY(-2px);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+    transform: translate(-2px, -2px);
+    box-shadow: var(--neo-shadow-lg);
   }
 
   /* 头部 */
@@ -108,7 +107,8 @@ const friends = [
   }
   .friend-org {
     font-size: 0.8rem;
-    color: var(--accent-primary);
+    color: var(--accent-blue);
+    font-weight: 600;
   }
   .friend-platform {
     margin-left: auto;
@@ -126,10 +126,7 @@ const friends = [
     color: var(--text-primary);
   }
   .friend-card:hover .friend-title {
-    background: var(--accent-gradient);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: var(--accent-blue);
   }
 
   /* 摘要 */
@@ -145,15 +142,16 @@ const friends = [
     padding: 0.85rem 1rem;
     margin-bottom: 1rem;
     border-radius: 8px;
-    background: var(--glass-layer-1);
-    border-left: 3px solid var(--accent-primary);
+    background: var(--neo-surface-alt);
+    border: var(--neo-border);
+    border-left: 5px solid var(--accent-blue);
   }
   .friend-rec-label {
     font-size: 0.75rem;
-    font-weight: 600;
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: var(--accent-primary);
+    color: var(--accent-blue);
     display: block;
     margin-bottom: 0.3rem;
   }
@@ -181,9 +179,10 @@ const friends = [
     font-size: 0.7rem;
     padding: 0.15rem 0.55rem;
     border-radius: 9999px;
-    background: var(--glass-layer-2);
-    color: var(--text-secondary);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: var(--accent-orange);
+    color: var(--text-primary);
+    border: 2px solid var(--neo-border-color);
+    font-weight: 600;
   }
   .friend-date {
     font-size: 0.75rem;

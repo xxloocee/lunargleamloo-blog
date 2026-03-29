@@ -5,14 +5,14 @@ import { SITE_CONFIG } from '~/lib/constants';
 
 <PageLayout title="关于我" description="了解更多关于我的信息">
   <div class="flex flex-col items-center text-center mb-8">
-    <div class="w-24 h-24 rounded-full glass mb-4 flex items-center justify-center text-3xl">
+    <div class="w-24 h-24 rounded-full mb-4 flex items-center justify-center text-3xl" style="background: var(--neo-surface); border: var(--neo-border); box-shadow: var(--neo-shadow);">
       🧑‍💻
     </div>
     <h2 class="text-2xl font-bold mb-2">{SITE_CONFIG.author.name}</h2>
     <p style="color: var(--text-secondary);">{SITE_CONFIG.author.bio}</p>
   </div>
 
-  <hr class="my-8" style="border-color: rgba(255,255,255,0.1);" />
+  <hr class="my-8" style="border-color: var(--neo-border-color);" />
 
   <p>这是关于页的占位内容，暂时还没有想好写什么。</p>
 

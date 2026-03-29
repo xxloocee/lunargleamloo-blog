@@ -1,35 +1,49 @@
 ---
-import { SITE_CONFIG } from '~/lib/constants';
-import SearchTrigger from '~/components/SearchTrigger.astro';
-import SearchModal from '~/components/SearchModal.astro';
+import { SITE_CONFIG } from "~/lib/constants";
+import SearchTrigger from "~/components/SearchTrigger.astro";
+import SearchModal from "~/components/SearchModal.astro";
 
 const navLinks = [
-  { href: '/', label: '首页' },
-  { href: '/blog', label: '文章' },
-  { href: '/archive', label: '归档' },
-  { href: '/category', label: '分类' },
-  { href: '/friends', label: '友链' },
-  { href: '/about', label: '关于' },
+  { href: "/", label: "首页" },
+  { href: "/blog", label: "文章" },
+  { href: "/archive", label: "归档" },
+  { href: "/category", label: "分类" },
+  { href: "/friends", label: "友链" },
+  { href: "/about", label: "关于" },
 ];
 ---
 
-<header class="sticky top-0 z-50 glass px-4 py-3">
+<header
+  class="shrink-0 z-50 px-4 py-3"
+  style="background: var(--neo-surface); border-bottom: var(--neo-border); box-shadow: 0 4px 0px var(--neo-border-color);"
+>
   <nav class="max-w-6xl mx-auto flex items-center justify-between">
-    <a href="/" class="text-lg font-bold" style="font-family: 'Noto Serif SC', serif;">
+    <a
+      href="/"
+      class="text-lg font-extrabold"
+      style="font-family: 'Noto Serif SC', serif; color: var(--accent-title);"
+    >
       {SITE_CONFIG.title}
     </a>
 
     <!-- 桌面端导航 -->
-    <div class="hidden md:flex items-center gap-4">
-      {navLinks.map((link) => (
-        <a href={link.href} class="text-sm hover:opacity-80 transition-opacity">
-          {link.label}
-        </a>
-      ))}
+    <div class="hidden md:flex items-center gap-1">
+      {
+        navLinks.map((link) => (
+          <a
+            href={link.href}
+            class="nav-link text-sm font-semibold px-3 py-1.5 rounded-lg transition-colors"
+            style="color: var(--text-primary);"
+          >
+            {link.label}
+          </a>
+        ))
+      }
       <SearchTrigger />
       <button
         id="dark-mode-toggle"
-        class="text-lg hover:opacity-80 transition-opacity"
+        class="ml-2 w-9 h-9 flex items-center justify-center rounded-full font-bold text-sm transition-colors"
+        style="border: var(--neo-border); background: var(--neo-surface-alt);"
         aria-label="切换深色模式"
       >
         🌓
@@ -37,18 +51,20 @@ const navLinks = [
     </div>
 
     <!-- 移动端菜单按钮 -->
-    <div class="flex md:hidden items-center gap-3">
+    <div class="flex md:hidden items-center gap-2">
       <SearchTrigger />
       <button
         id="dark-mode-toggle-mobile"
-        class="text-lg"
+        class="w-9 h-9 flex items-center justify-center rounded-full text-sm"
+        style="border: var(--neo-border); background: var(--neo-surface-alt);"
         aria-label="切换深色模式"
       >
         🌓
       </button>
       <button
         id="mobile-menu-toggle"
-        class="text-xl"
+        class="w-9 h-9 flex items-center justify-center rounded-full text-xl font-bold"
+        style="border: var(--neo-border); background: var(--neo-surface-alt);"
         aria-label="打开菜单"
       >
         ☰
@@ -57,36 +73,52 @@ const navLinks = [
   </nav>
 
   <!-- 移动端菜单 -->
-  <div id="mobile-menu" class="hidden md:hidden mt-3 pb-2">
-    {navLinks.map((link) => (
-      <a href={link.href} class="block py-2 text-sm hover:opacity-80">
-        {link.label}
-      </a>
-    ))}
+  <div
+    id="mobile-menu"
+    class="hidden md:hidden mt-3 pb-2 pt-3"
+    style="border-top: var(--neo-border);"
+  >
+    {
+      navLinks.map((link) => (
+        <a
+          href={link.href}
+          class="block py-2 px-3 text-sm font-semibold rounded-lg transition-colors"
+          style="color: var(--text-primary);"
+        >
+          {link.label}
+        </a>
+      ))
+    }
   </div>
   <SearchModal />
 </header>
+
+<style>
+  .nav-link:hover {
+    background: var(--accent-orange);
+  }
+</style>
 
 <script is:inline>
   (function () {
     function toggleTheme() {
       var html = document.documentElement;
-      var current = html.getAttribute('data-theme');
-      var next = current === 'dark' ? 'light' : 'dark';
-      html.setAttribute('data-theme', next);
-      localStorage.setItem('theme', next);
+      var current = html.getAttribute("data-theme");
+      var next = current === "dark" ? "light" : "dark";
+      html.setAttribute("data-theme", next);
+      localStorage.setItem("theme", next);
     }
 
-    var toggleBtn = document.getElementById('dark-mode-toggle');
-    var toggleBtnMobile = document.getElementById('dark-mode-toggle-mobile');
-    if (toggleBtn) toggleBtn.addEventListener('click', toggleTheme);
-    if (toggleBtnMobile) toggleBtnMobile.addEventListener('click', toggleTheme);
+    var toggleBtn = document.getElementById("dark-mode-toggle");
+    var toggleBtnMobile = document.getElementById("dark-mode-toggle-mobile");
+    if (toggleBtn) toggleBtn.addEventListener("click", toggleTheme);
+    if (toggleBtnMobile) toggleBtnMobile.addEventListener("click", toggleTheme);
 
-    var menuToggle = document.getElementById('mobile-menu-toggle');
+    var menuToggle = document.getElementById("mobile-menu-toggle");
     if (menuToggle) {
-      menuToggle.addEventListener('click', function () {
-        var menu = document.getElementById('mobile-menu');
-        if (menu) menu.classList.toggle('hidden');
+      menuToggle.addEventListener("click", function () {
+        var menu = document.getElementById("mobile-menu");
+        if (menu) menu.classList.toggle("hidden");
       });
     }
   })();

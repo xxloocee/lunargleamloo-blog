@@ -1,9 +1,10 @@
 ---
-import { SITE_CONFIG } from '~/lib/constants';
-import Header from '~/components/Header.astro';
-import Footer from '~/components/Footer.astro';
-import SeoHead from '~/components/SeoHead.astro';
-import '~/styles/global.css';
+import { SITE_CONFIG } from "~/lib/constants";
+import Header from "~/components/Header.astro";
+import Footer from "~/components/Footer.astro";
+import SeoHead from "~/components/SeoHead.astro";
+import Decorations from "~/components/Decorations.astro";
+import "~/styles/global.css";
 
 interface Props {
   title?: string;
@@ -16,7 +17,7 @@ const {
   title = SITE_CONFIG.title,
   description = SITE_CONFIG.description,
   image,
-  type = 'website',
+  type = "website",
 } = Astro.props;
 ---
 
@@ -29,43 +30,56 @@ const {
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Serif+SC:wght@400;700;900&display=swap"
       rel="stylesheet"
     />
-    <link rel="alternate" type="application/rss+xml" title={SITE_CONFIG.title} href="/rss.xml" />
-    <SeoHead title={title} description={description} image={image} type={type} />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title={SITE_CONFIG.title}
+      href="/rss.xml"
+    />
+    <SeoHead
+      title={title}
+      description={description}
+      image={image}
+      type={type}
+    />
     <script is:inline>
       // 深色模式：渲染前执行，避免闪烁
       (function () {
-        const saved = localStorage.getItem('theme');
+        const saved = localStorage.getItem("theme");
         if (saved) {
-          document.documentElement.setAttribute('data-theme', saved);
-        } else if (window.matchMedia('(prefers-color-scheme: light)').matches) {
-          document.documentElement.setAttribute('data-theme', 'light');
+          document.documentElement.setAttribute("data-theme", saved);
+        } else if (window.matchMedia("(prefers-color-scheme: light)").matches) {
+          document.documentElement.setAttribute("data-theme", "light");
         }
       })();
     </script>
   </head>
-  <body class="relative">
-    <!-- 动态光球背景 -->
-    <div class="orb orb-1" aria-hidden="true"></div>
-    <div class="orb orb-2" aria-hidden="true"></div>
-    <div class="orb orb-3" aria-hidden="true"></div>
-
-    <div class="relative z-10 min-h-screen flex flex-col">
+  <body>
+    <div class="h-screen flex flex-col overflow-hidden">
       <Header />
-      <slot />
+      <div id="main-scroll" class="flex-1 overflow-y-auto">
+        <div class="relative min-h-full">
+          <Decorations />
+          <slot />
+        </div>
+      </div>
       <Footer />
     </div>
 
     <!-- 回到顶部按钮 -->
-    <button
-      id="back-to-top"
-      aria-label="回到顶部"
-      class="back-to-top"
-    >
-      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M10 4L4 10.5H8.5V16H11.5V10.5H16L10 4Z" fill="currentColor"/>
+    <button id="back-to-top" aria-label="回到顶部" class="back-to-top">
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 20 20"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path d="M10 4L4 10.5H8.5V16H11.5V10.5H16L10 4Z" fill="currentColor"
+        ></path>
       </svg>
     </button>
 
@@ -73,26 +87,27 @@ const {
       .back-to-top {
         position: fixed;
         right: 1.5rem;
-        bottom: 1.5rem;
+        bottom: 5rem;
         z-index: 50;
-        width: 42px;
-        height: 42px;
+        width: 44px;
+        height: 44px;
         display: flex;
         align-items: center;
         justify-content: center;
-        border: none;
         border-radius: 50%;
         cursor: pointer;
-        background: var(--glass-bg);
-        backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
-        -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
-        box-shadow: var(--glass-shadow);
-        border: var(--glass-border);
-        color: var(--text-secondary);
+        background: var(--neo-surface);
+        border: var(--neo-border);
+        box-shadow: var(--neo-shadow-sm);
+        color: var(--text-primary);
         opacity: 0;
         visibility: hidden;
         transform: translateY(12px);
-        transition: opacity 0.3s, visibility 0.3s, transform 0.3s, background 0.2s, color 0.2s;
+        transition:
+          opacity 0.3s,
+          visibility 0.3s,
+          transform 0.3s,
+          box-shadow 0.15s;
       }
       .back-to-top.visible {
         opacity: 1;
@@ -100,18 +115,28 @@ const {
         transform: translateY(0);
       }
       .back-to-top:hover {
-        background: var(--glass-bg-hover);
-        color: var(--accent-primary);
+        transform: translate(-2px, -2px);
+        box-shadow: var(--neo-shadow);
+        color: var(--accent-blue);
+      }
+      .back-to-top:active {
+        transform: translate(1px, 1px);
+        box-shadow: var(--neo-shadow-pressed);
       }
     </style>
 
     <script>
-      const btn = document.getElementById('back-to-top')!;
-      window.addEventListener('scroll', () => {
-        btn.classList.toggle('visible', window.scrollY > 300);
-      }, { passive: true });
-      btn.addEventListener('click', () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+      const btn = document.getElementById("back-to-top")!;
+      const mainScroll = document.getElementById("main-scroll")!;
+      mainScroll.addEventListener(
+        "scroll",
+        () => {
+          btn.classList.toggle("visible", mainScroll.scrollTop > 300);
+        },
+        { passive: true },
+      );
+      btn.addEventListener("click", () => {
+        mainScroll.scrollTo({ top: 0, behavior: "smooth" });
       });
     </script>
   </body>

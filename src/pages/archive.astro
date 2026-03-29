@@ -28,7 +28,7 @@ for (const post of posts) {
         <h2 class="text-xl font-bold mb-4" style="color: var(--accent-primary);">{month}</h2>
         <div class="space-y-3">
           {monthPosts.map((post) => (
-            <a href={`/blog/${post.id}`} class="glass-sm glass-hover p-4 flex items-center gap-4 block">
+            <a href={`/blog/${post.id}`} class="neo-card-sm neo-hover p-4 flex items-center gap-4" style="color: var(--text-primary);">
               <time class="text-xs whitespace-nowrap" style="color: var(--text-tertiary);">
                 {formatDate(post.data.pubDate)}
               </time>

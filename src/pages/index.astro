@@ -13,35 +13,32 @@ const posts = (await getCollection('blog'))
 <BaseLayout>
   <main class="flex-1 w-full max-w-6xl mx-auto px-4 py-8">
     <!-- Hero -->
-    <section class="glass p-8 md:p-12 mb-12 text-center">
-      <h1 class="text-4xl md:text-5xl font-bold mb-4" style="font-family: 'Noto Serif SC', serif;">
+    <section class="neo-card p-8 md:p-12 mb-12 text-center">
+      <h1 class="text-4xl md:text-5xl font-extrabold mb-4" style="font-family: 'Noto Serif SC', serif;">
         {SITE_CONFIG.title}
       </h1>
       <p class="text-lg mb-6" style="color: var(--text-secondary);">
         {SITE_CONFIG.description}
       </p>
-      <a href="/blog" class="glass-sm inline-block px-8 py-3 glass-hover">
+      <a href="/blog" class="neo-btn neo-btn-primary inline-block px-8 py-3">
         浏览全部文章 →
       </a>
     </section>
 
     <!-- 最新文章 -->
     <section>
-      <h2 class="text-2xl font-bold mb-6" style="font-family: 'Noto Serif SC', serif;">最新文章</h2>
+      <h2 class="text-2xl font-extrabold mb-6" style="font-family: 'Noto Serif SC', serif;">最新文章</h2>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {posts.map((post) => (
-          <a href={`/blog/${post.id}`} class="glass glass-hover p-6 block">
+          <a href={`/blog/${post.id}`} class="neo-card neo-hover p-6 block" style="color: var(--text-primary);">
             <div class="flex flex-wrap gap-2 mb-3">
               {post.data.categories.map((cat) => (
-                <span
-                  class="text-xs px-2 py-0.5 rounded-full"
-                  style="background: var(--accent-primary); color: #fff;"
-                >
+                <span class="neo-badge">
                   {cat}
                 </span>
               ))}
             </div>
-            <h3 class="text-lg font-semibold mb-2">{post.data.title}</h3>
+            <h3 class="text-lg font-bold mb-2">{post.data.title}</h3>
             <p class="text-sm mb-3" style="color: var(--text-secondary);">
               {post.data.description}
             </p>

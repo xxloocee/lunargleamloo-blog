@@ -6,9 +6,9 @@
 <div
   id="search-modal"
   class="fixed inset-0 z-100 hidden items-start justify-center pt-[15vh]"
-  style="background: rgba(0,0,0,0.5); backdrop-filter: blur(4px);"
+  style="background: rgba(0,0,0,0.5);"
 >
-  <div class="glass-lg w-full max-w-2xl mx-4 p-6">
+  <div class="neo-card-lg w-full max-w-2xl mx-4 p-6">
     <div class="flex items-center gap-3 mb-4">
       <span class="text-xl">🔍</span>
       <input
@@ -21,8 +21,8 @@
       />
       <button
         id="search-close"
-        class="text-sm px-2 py-1 rounded hover:opacity-80"
-        style="background: var(--glass-layer-1);"
+        class="text-sm px-2 py-1 rounded font-bold hover:opacity-80"
+        style="background: var(--neo-surface-alt); border: 1.5px solid var(--neo-border-color);"
       >
         ESC
       </button>
@@ -116,7 +116,7 @@
             .slice(0, 8)
             .map(function (r) {
               return (
-                '<a href="' + r.url + '" class="block p-3 rounded hover:opacity-80" style="background: var(--glass-layer-1);">' +
+                '<a href="' + r.url + '" class="block p-3 rounded hover:opacity-80" style="background: var(--neo-surface-alt); border: 1.5px solid var(--neo-border-color); border-radius: 8px;">' +
                 '<div class="font-medium">' + (r.meta && r.meta.title || "无标题") + "</div>" +
                 '<div class="text-xs mt-1" style="color: var(--text-tertiary);">' + (r.excerpt || "") + "</div>" +
                 "</a>"
@@ -144,7 +144,7 @@
           .slice(0, 8)
           .map(function (p) {
             return (
-              '<a href="' + p.url + '" class="block p-3 rounded hover:opacity-80" style="background: var(--glass-layer-1);">' +
+              '<a href="' + p.url + '" class="block p-3 rounded hover:opacity-80" style="background: var(--neo-surface-alt); border: 1.5px solid var(--neo-border-color); border-radius: 8px;">' +
               '<div class="font-medium">' + p.title + "</div>" +
               '<div class="text-xs mt-1" style="color: var(--text-tertiary);">' + p.description + "</div>" +
               "</a>"

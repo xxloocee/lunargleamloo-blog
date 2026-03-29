@@ -1,14 +1,33 @@
 ---
-import { SITE_CONFIG } from '~/lib/constants';
+import { SITE_CONFIG } from "~/lib/constants";
 ---
 
-<footer class="glass mt-auto px-4 py-6">
-  <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-sm" style="color: var(--text-tertiary);">
-    <p>© {new Date().getFullYear()} {SITE_CONFIG.author.name}. All rights reserved.</p>
+<footer
+  class="shrink-0 px-4 py-6"
+  style="background: var(--neo-surface); border-top: var(--neo-border);"
+>
+  <div
+    class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-sm"
+    style="color: var(--text-tertiary);"
+  >
+    <p>
+      © {new Date().getFullYear()}
+      {SITE_CONFIG.author.name}. All rights reserved.
+    </p>
     <div class="flex items-center gap-4">
-      <a href="/rss.xml" target="_blank" class="hover:opacity-80">RSS</a>
-      <a href={SITE_CONFIG.author.social.github} target="_blank" rel="noopener noreferrer" class="hover:opacity-80">GitHub</a>
-      <a href={`mailto:${SITE_CONFIG.author.email}`} class="hover:opacity-80">邮箱</a>
+      <a href="/rss.xml" target="_blank" class="font-semibold hover:opacity-80"
+        >RSS</a
+      >
+      <a
+        href={SITE_CONFIG.author.social.github}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="font-semibold hover:opacity-80">GitHub</a
+      >
+      <a
+        href={`mailto:${SITE_CONFIG.author.email}`}
+        class="font-semibold hover:opacity-80">邮箱</a
+      >
     </div>
   </div>
 </footer>

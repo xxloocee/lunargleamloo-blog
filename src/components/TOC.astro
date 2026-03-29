@@ -8,9 +8,9 @@ const filteredHeadings = headings.filter((h) => h.depth <= 3);
 ---
 
 {filteredHeadings.length > 0 && (
-  <nav class="glass-sm p-4 sticky top-20" aria-label="文章目录">
-    <h3 class="text-sm font-semibold mb-3" style="color: var(--text-primary);">目录</h3>
-    <ul class="space-y-1.5 text-sm">
+  <nav class="neo-card-sm p-4 sticky top-4" aria-label="文章目录" style="max-height: calc(100vh - 10rem); display: flex; flex-direction: column;">
+    <h3 class="text-sm font-semibold mb-3 shrink-0" style="color: var(--text-primary);">目录</h3>
+    <ul class="space-y-1.5 text-sm overflow-y-auto" style="scrollbar-width: none;">
       {filteredHeadings.map((heading) => (
         <li style={`padding-left: ${(heading.depth - 1) * 12}px;`}>
           <a

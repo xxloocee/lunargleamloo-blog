@@ -1,0 +1,93 @@
+<!-- Scattered decorative SVG elements in page margins (PC only) -->
+<div class="page-decorations" aria-hidden="true">
+  <div class="deco-zone deco-left"></div>
+  <div class="deco-zone deco-right"></div>
+</div>
+
+<style>
+  .page-decorations {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .deco-zone {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    overflow: hidden;
+  }
+
+  /* 左右两侧留白区域：视口一半减去内容半宽(max-w-6xl=72rem/2=36rem + 1rem间距) */
+  .deco-left {
+    left: 0;
+    width: calc(50% - 37rem);
+  }
+
+  .deco-right {
+    right: 0;
+    width: calc(50% - 37rem);
+  }
+
+  .deco-zone :global(.deco-item) {
+    position: absolute;
+    opacity: 0.8;
+  }
+
+  :global([data-theme="dark"]) .deco-zone :global(.deco-item) {
+    opacity: 0.8;
+  }
+
+  @media (max-width: 1280px) {
+    .page-decorations {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  const SPACING = 400;
+  const SHAPES = [
+    `<path d="M50 5L56 28L76 16L64 38L92 36L63 52L74 82L54 62L50 96L46 62L26 82L37 52L8 36L36 38L24 16L44 28Z"/>`,
+    `<rect x="46" y="5" width="8" height="90" rx="4"/><rect x="46" y="5" width="8" height="90" rx="4" transform="rotate(60 50 50)"/><rect x="46" y="5" width="8" height="90" rx="4" transform="rotate(-60 50 50)"/><circle cx="50" cy="8" r="5"/><circle cx="50" cy="92" r="5"/><circle cx="86" cy="29" r="5"/><circle cx="14" cy="71" r="5"/><circle cx="86" cy="71" r="5"/><circle cx="14" cy="29" r="5"/>`,
+    `<ellipse cx="50" cy="64" rx="24" ry="22"/><circle cx="28" cy="36" r="11"/><circle cx="44" cy="24" r="10"/><circle cx="56" cy="24" r="10"/><circle cx="72" cy="36" r="11"/>`,
+    `<path d="M50 8C20 30 12 65 50 92C88 65 80 30 50 8Z"/>`,
+    `<circle cx="50" cy="28" r="15"/><circle cx="71" cy="43" r="15"/><circle cx="63" cy="68" r="15"/><circle cx="37" cy="68" r="15"/><circle cx="29" cy="43" r="15"/>`,
+  ];
+
+  function render() {
+    const leftZone = document.querySelector('.deco-left');
+    const rightZone = document.querySelector('.deco-right');
+    if (!leftZone || !rightZone) return;
+
+    const contentHeight = document.getElementById('main-scroll')?.scrollHeight ?? 0;
+    const perSide = Math.max(2, Math.ceil(contentHeight / SPACING));
+    const total = perSide * 2;
+
+    let leftHtml = '';
+    let rightHtml = '';
+
+    for (let i = 0; i < total; i++) {
+      const s = (i * 137 + 53) % 100;
+      const isLeft = i % 2 === 0;
+      const top = 120 + Math.floor(i / 2) * SPACING + (s % 120);
+      const offset = 5 + (s % 40);
+      const rotation = (s * 37) % 360;
+      const size = 80 + (s % 48);
+      const colorIdx = ((i * 3 + 1) % 5) + 1;
+      const shape = SHAPES[i % 5];
+      const side = isLeft ? 'left' : 'right';
+
+      const el = `<div class="deco-item" style="${side}:${offset}px;top:${top}px;transform:rotate(${rotation}deg)"><svg width="${size}" height="${size}" viewBox="0 0 100 100" fill="var(--deco-${colorIdx})">${shape}</svg></div>`;
+
+      if (isLeft) leftHtml += el;
+      else rightHtml += el;
+    }
+
+    leftZone.innerHTML = leftHtml;
+    rightZone.innerHTML = rightHtml;
+  }
+
+  render();
+</script>
