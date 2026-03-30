@@ -1,5 +1,6 @@
 export const SITE_CONFIG = {
-  title: '东方欲晓，莫道君行早',
+  title: '弃捐勿复道，努力加餐饭',
+  slogan: '东方欲晓，莫道君行早',
   description: '记录生活，分享知识，探索未知',
   url: 'https://xxloocee.github.io',
   author: {

@@ -1,0 +1,84 @@
+---
+import { getCollection, render } from 'astro:content';
+import { formatDate, readingTime } from '~/lib/utils';
+import TOC from '~/components/TOC.astro';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const items = await getCollection('shiyi');
+  return items.map((item) => ({
+    params: { slug: item.id },
+    props: { item },
+  }));
+}
+
+const { item } = Astro.props;
+const { Content, headings } = await render(item);
+---
+
+<BaseLayout title={`${item.data.title} | 拾遗`} description={item.data.description}>
+  <main class="flex-1 w-full max-w-6xl mx-auto px-4 py-8">
+    <div class="flex flex-col lg:flex-row gap-8">
+      <!-- 主内容区 -->
+      <div class="flex-1 min-w-0">
+        <!-- 文章头部 -->
+        <header class="neo-card p-8 mb-8">
+          <div class="flex flex-wrap items-center gap-2 mb-4">
+            <span class="neo-badge">{item.data.platform}</span>
+          </div>
+          <h1 class="text-3xl md:text-4xl font-bold mb-4" style="font-family: 'Noto Serif SC', serif;">
+            {item.data.title}
+          </h1>
+          <p class="text-sm mb-4" style="color: var(--text-tertiary);">
+            {formatDate(item.data.pubDate)} · {readingTime(item.body || '')}
+          </p>
+          <!-- 出处信息 -->
+          <div
+            class="flex flex-wrap items-center gap-3 p-3 rounded-lg text-sm"
+            style="background: var(--neo-surface-alt); border: var(--neo-border);"
+          >
+            <span style="color: var(--text-secondary);">
+              原作者：<strong style="color: var(--text-primary);">{item.data.author}</strong>
+            </span>
+            <span style="color: var(--text-tertiary);">|</span>
+            <a
+              href={item.data.source}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="font-semibold underline underline-offset-2 transition-colors"
+              style="color: var(--accent-blue);"
+            >
+              查看原文 ↗
+            </a>
+          </div>
+          {item.data.tags.length > 0 && (
+            <div class="flex flex-wrap gap-2 mt-4">
+              {item.data.tags.map((tag) => (
+                <span class="neo-tag">#{tag}</span>
+              ))}
+            </div>
+          )}
+        </header>
+
+        <!-- 文章内容 -->
+        <article class="neo-card p-8 mb-8">
+          <div class="prose">
+            <Content />
+          </div>
+        </article>
+
+        <!-- 返回列表 -->
+        <div class="text-center mt-8">
+          <a href="/shiyi" class="neo-btn inline-block">
+            ← 返回拾遗列表
+          </a>
+        </div>
+      </div>
+
+      <!-- 侧边栏目录 -->
+      <aside class="hidden lg:block w-64 shrink-0">
+        <TOC headings={headings} />
+      </aside>
+    </div>
+  </main>
+</BaseLayout>

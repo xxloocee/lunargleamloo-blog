@@ -1,192 +1,53 @@
 ---
-import PageLayout from '~/layouts/PageLayout.astro';
+import BaseLayout from '~/layouts/BaseLayout.astro';
 
 const friends = [
   {
     author: 'shiqkuangsan',
     org: 'antdv-next',
-    avatar: '🧩',
     title: '当 AI 能写完整个项目，我们还需要组件库吗？',
     url: 'https://mp.weixin.qq.com/s/-WDJzlHyMKFs22Ao0OjC3w',
     platform: '微信公众号 · Antdv Next',
     pubDate: '2026-03-27',
     tags: ['AI', '组件库', '前端'],
     summary: '从 Ant Design Vue 维护者的视角出发，探讨 AI 原生时代组件库的生存价值——代码生成只是冰山一角，API 契约、设计系统和品牌一致性才是不可替代的核心。',
-    recommendation: '一个组件库维护者的真诚自我拷问，视角独特，兼具技术深度和行业洞察。文中提出的"AI 是组件库最大用户"这一反直觉观点尤为精彩。',
   },
 ];
 ---
 
-<PageLayout title="友链" description="我的朋友们">
-  <p class="mb-10" style="color: var(--text-secondary);">
-    来自朋友们的优质文章推荐，每一篇都值得细读。
-  </p>
-
-  <div class="friend-list">
-    {friends.map((friend) => (
-      <a
-        href={friend.url}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="friend-card neo-card"
-      >
-        {/* 头部：作者信息 */}
-        <div class="friend-header">
-          <span class="friend-avatar">{friend.avatar}</span>
-          <div class="friend-meta">
-            <span class="friend-author">{friend.author}</span>
-            <span class="friend-org">@{friend.org}</span>
+<BaseLayout title="友链 | My Blog" description="来自朋友们的优质文章推荐">
+  <main class="flex-1 w-full max-w-4xl mx-auto px-4 py-8">
+    <div class="mb-8">
+      <h1 class="text-3xl font-bold mb-2" style="font-family: 'Noto Serif SC', serif;">友链</h1>
+      <p class="text-sm" style="color: var(--text-tertiary);">
+        来自朋友们的优质文章推荐，每一篇都值得细读。
+      </p>
+    </div>
+    <div class="space-y-4">
+      {friends.map((friend) => (
+        <a href={friend.url} target="_blank" rel="noopener noreferrer" class="neo-card neo-hover p-6 block" style="color: var(--text-primary);">
+          <div class="flex flex-wrap items-center gap-3 mb-2">
+            <span class="text-xs" style="color: var(--text-tertiary);">
+              {friend.pubDate}
+            </span>
+            <span class="neo-badge">{friend.platform}</span>
+            <span class="text-xs" style="color: var(--text-secondary);">
+              @{friend.author}
+            </span>
           </div>
-          <span class="friend-platform">{friend.platform}</span>
-        </div>
-
-        {/* 文章标题 */}
-        <h3 class="friend-title">{friend.title}</h3>
-
-        {/* 文章摘要 */}
-        <p class="friend-summary">{friend.summary}</p>
-
-        {/* 推荐理由 */}
-        <div class="friend-rec">
-          <span class="friend-rec-label">推荐理由</span>
-          <p class="friend-rec-text">{friend.recommendation}</p>
-        </div>
-
-        {/* 底部：标签 + 日期 */}
-        <div class="friend-footer">
-          <div class="friend-tags">
-            {friend.tags.map((tag) => (
-              <span class="friend-tag">{tag}</span>
-            ))}
-          </div>
-          <time class="friend-date">{friend.pubDate}</time>
-        </div>
-      </a>
-    ))}
-  </div>
-</PageLayout>
-
-<style>
-  .friend-list {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-
-  .friend-card {
-    display: block;
-    padding: 1.5rem;
-    text-decoration: none;
-    color: inherit;
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
-  }
-  .friend-card:hover {
-    transform: translate(-2px, -2px);
-    box-shadow: var(--neo-shadow-lg);
-  }
-
-  /* 头部 */
-  .friend-header {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    margin-bottom: 1rem;
-  }
-  .friend-avatar {
-    font-size: 1.75rem;
-    line-height: 1;
-  }
-  .friend-meta {
-    display: flex;
-    flex-direction: column;
-  }
-  .friend-author {
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: var(--text-primary);
-  }
-  .friend-org {
-    font-size: 0.8rem;
-    color: var(--accent-blue);
-    font-weight: 600;
-  }
-  .friend-platform {
-    margin-left: auto;
-    font-size: 0.75rem;
-    color: var(--text-tertiary);
-    white-space: nowrap;
-  }
-
-  /* 标题 */
-  .friend-title {
-    font-size: 1.25rem;
-    font-weight: 700;
-    line-height: 1.4;
-    margin-bottom: 0.75rem;
-    color: var(--text-primary);
-  }
-  .friend-card:hover .friend-title {
-    color: var(--accent-blue);
-  }
-
-  /* 摘要 */
-  .friend-summary {
-    font-size: 0.9rem;
-    line-height: 1.7;
-    color: var(--text-secondary);
-    margin-bottom: 1rem;
-  }
-
-  /* 推荐理由 */
-  .friend-rec {
-    padding: 0.85rem 1rem;
-    margin-bottom: 1rem;
-    border-radius: 8px;
-    background: var(--neo-surface-alt);
-    border: var(--neo-border);
-    border-left: 5px solid var(--accent-blue);
-  }
-  .friend-rec-label {
-    font-size: 0.75rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--accent-blue);
-    display: block;
-    margin-bottom: 0.3rem;
-  }
-  .friend-rec-text {
-    font-size: 0.85rem;
-    line-height: 1.65;
-    color: var(--text-secondary);
-    margin: 0;
-  }
-
-  /* 底部 */
-  .friend-footer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.75rem;
-    flex-wrap: wrap;
-  }
-  .friend-tags {
-    display: flex;
-    gap: 0.4rem;
-    flex-wrap: wrap;
-  }
-  .friend-tag {
-    font-size: 0.7rem;
-    padding: 0.15rem 0.55rem;
-    border-radius: 9999px;
-    background: var(--accent-orange);
-    color: var(--text-primary);
-    border: 2px solid var(--neo-border-color);
-    font-weight: 600;
-  }
-  .friend-date {
-    font-size: 0.75rem;
-    color: var(--text-tertiary);
-    white-space: nowrap;
-  }
-</style>
+          <h2 class="text-xl font-bold mb-2">{friend.title}</h2>
+          <p class="text-sm" style="color: var(--text-secondary);">
+            {friend.summary}
+          </p>
+          {friend.tags.length > 0 && (
+            <div class="flex flex-wrap gap-2 mt-3">
+              {friend.tags.map((tag) => (
+                <span class="neo-tag">#{tag}</span>
+              ))}
+            </div>
+          )}
+        </a>
+      ))}
+    </div>
+  </main>
+</BaseLayout>
