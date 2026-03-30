@@ -11,6 +11,8 @@ interface Props {
   description?: string;
   image?: string;
   type?: string;
+  pubDate?: Date;
+  updatedDate?: Date;
 }
 
 const {
@@ -18,6 +20,8 @@ const {
   description = SITE_CONFIG.description,
   image,
   type = "website",
+  pubDate,
+  updatedDate,
 } = Astro.props;
 ---
 
@@ -44,6 +48,8 @@ const {
       description={description}
       image={image}
       type={type}
+      pubDate={pubDate}
+      updatedDate={updatedDate}
     />
     <script is:inline>
       // 深色模式：渲染前执行，避免闪烁
@@ -139,5 +145,8 @@ const {
         mainScroll.scrollTo({ top: 0, behavior: "smooth" });
       });
     </script>
+    {SITE_CONFIG.cfAnalyticsToken && (
+      <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon={`{"token": "${SITE_CONFIG.cfAnalyticsToken}"}`}></script>
+    )}
   </body>
 </html>

@@ -11,11 +11,27 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 import { fileURLToPath } from 'url';
+import { visit } from 'unist-util-visit';
+
+/** @returns {import('unified').Plugin} */
+function rehypeLazyImages() {
+  return (tree) => {
+    visit(tree, 'element', (node) => {
+      if (node.tagName === 'img') {
+        node.properties.loading = 'lazy';
+        node.properties.decoding = 'async';
+      }
+    });
+  };
+}
 
 export default defineConfig({
-  site: 'https://example.com',
+  site: 'https://lunargleamloo-blog.pages.dev',
   output: 'static',
   integrations: [sitemap()],
+  markdown: {
+    rehypePlugins: [rehypeLazyImages],
+  },
   vite: {
     plugins: [tailwindcss()],
     resolve: {

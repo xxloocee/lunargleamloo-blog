@@ -29,7 +29,7 @@ const {
 } = Astro.props;
 ---
 
-<BaseLayout title={`${title} | My Blog`} description={description} image={cover} type="article">
+<BaseLayout title={`${title} | My Blog`} description={description} image={cover} type="article" pubDate={pubDate} updatedDate={updatedDate}>
   <main class="flex-1 w-full max-w-6xl mx-auto px-4 py-8">
     <div class="flex flex-col lg:flex-row gap-8">
       <!-- 主内容区 -->
