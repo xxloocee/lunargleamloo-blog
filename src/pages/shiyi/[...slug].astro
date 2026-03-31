@@ -40,16 +40,20 @@ const { Content, headings } = await render(item);
             <span style="color: var(--text-secondary);">
               原作者：<strong style="color: var(--text-primary);">{item.data.author}</strong>
             </span>
-            <span style="color: var(--text-tertiary);">|</span>
-            <a
-              href={item.data.source}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="font-semibold underline underline-offset-2 transition-colors"
-              style="color: var(--accent-blue);"
-            >
-              查看原文 ↗
-            </a>
+            {item.data.source && (
+              <>
+                <span style="color: var(--text-tertiary);">|</span>
+                <a
+                  href={item.data.source}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="font-semibold underline underline-offset-2 transition-colors"
+                  style="color: var(--accent-blue);"
+                >
+                  查看原文 ↗
+                </a>
+              </>
+            )}
           </div>
           {item.data.tags.length > 0 && (
             <div class="flex flex-wrap gap-2 mt-4">

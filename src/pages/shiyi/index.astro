@@ -1,45 +1,60 @@
 ---
-import { getCollection } from 'astro:content';
-import BaseLayout from '~/layouts/BaseLayout.astro';
-import { formatDate } from '~/lib/utils';
+import { getCollection } from "astro:content";
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import { formatDate } from "~/lib/utils";
 
-const items = (await getCollection('shiyi'))
-  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const items = (await getCollection("shiyi")).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
 ---
 
-<BaseLayout title="拾遗 | My Blog" description="拾遗补缺，收录值得反复咀嚼的好内容">
+<BaseLayout
+  title="拾遗 | My Blog"
+  description="拾遗补缺，收录值得反复咀嚼的好内容"
+>
   <main class="flex-1 w-full max-w-4xl mx-auto px-4 py-8">
     <div class="mb-8">
-      <h1 class="text-3xl font-bold mb-2" style="font-family: 'Noto Serif SC', serif;">拾遗</h1>
+      <h1
+        class="text-3xl font-bold mb-2"
+        style="font-family: 'Noto Serif SC', serif;"
+      >
+        拾遗
+      </h1>
       <p class="text-sm" style="color: var(--text-tertiary);">
-        拾遗补缺，收录那些值得反复咀嚼的好内容。所有内容均标注原作者与出处。
+        拾遗补缺，收录那些值得反复咀嚼的好内容，所有内容均标注原作者与出处。
       </p>
     </div>
     <div class="space-y-4">
-      {items.map((item) => (
-        <a href={`/shiyi/${item.id}`} class="neo-card neo-hover p-6 block" style="color: var(--text-primary);">
-          <div class="flex flex-wrap items-center gap-3 mb-2">
-            <span class="text-xs" style="color: var(--text-tertiary);">
-              {formatDate(item.data.pubDate)}
-            </span>
-            <span class="neo-badge">{item.data.platform}</span>
-            <span class="text-xs" style="color: var(--text-secondary);">
-              @{item.data.author}
-            </span>
-          </div>
-          <h2 class="text-xl font-bold mb-2">{item.data.title}</h2>
-          <p class="text-sm" style="color: var(--text-secondary);">
-            {item.data.description}
-          </p>
-          {item.data.tags.length > 0 && (
-            <div class="flex flex-wrap gap-2 mt-3">
-              {item.data.tags.map((tag) => (
-                <span class="neo-tag">#{tag}</span>
-              ))}
+      {
+        items.map((item) => (
+          <a
+            href={`/shiyi/${item.id}`}
+            class="neo-card neo-hover p-6 block"
+            style="color: var(--text-primary);"
+          >
+            <div class="flex flex-wrap items-center gap-3 mb-2">
+              <span class="text-xs" style="color: var(--text-tertiary);">
+                {formatDate(item.data.pubDate)}
+              </span>
+              <span class="neo-badge">{item.data.platform}</span>
+              <span class="text-xs" style="color: var(--text-secondary);">
+                @{item.data.author}
+              </span>
             </div>
-          )}
-        </a>
-      ))}
+            <h2 class="text-xl font-bold mb-2">{item.data.title}</h2>
+            <p class="text-sm" style="color: var(--text-secondary);">
+              {item.data.description}
+            </p>
+            {item.data.tags.length > 0 && (
+              <div class="flex flex-wrap gap-2 mt-3">
+                {item.data.tags.map((tag) => (
+                  <span class="neo-tag">#{tag}</span>
+                ))}
+              </div>
+            )}
+          </a>
+        ))
+      }
     </div>
   </main>
 </BaseLayout>
