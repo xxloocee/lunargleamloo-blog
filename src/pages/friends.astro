@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '~/layouts/BaseLayout.astro';
+import { SITE_CONFIG } from '~/lib/constants';
 
 const friends = [
   {
@@ -15,7 +16,7 @@ const friends = [
 ];
 ---
 
-<BaseLayout title="友链 | My Blog" description="来自朋友们的优质文章推荐">
+<BaseLayout title={`友链 | ${SITE_CONFIG.title}`} description="来自朋友们的优质文章推荐">
   <main class="flex-1 w-full max-w-4xl mx-auto px-4 py-8">
     <div class="mb-8">
       <h1 class="text-3xl font-bold mb-2" style="font-family: 'Noto Serif SC', serif;">友链</h1>

@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '~/layouts/BaseLayout.astro';
+import { SITE_CONFIG } from '~/lib/constants';
 import { formatDate } from '~/lib/utils';
 
 const posts = (await getCollection('blog'))
@@ -18,7 +19,7 @@ for (const post of posts) {
 }
 ---
 
-<BaseLayout title="归档 | My Blog" description="按时间线浏览全部博客文章">
+<BaseLayout title={`归档 | ${SITE_CONFIG.title}`} description="按时间线浏览全部博客文章">
   <main class="flex-1 w-full max-w-4xl mx-auto px-4 py-8">
     <h1 class="text-3xl font-bold mb-8" style="font-family: 'Noto Serif SC', serif;">归档</h1>
     <p class="mb-8" style="color: var(--text-secondary);">共 {posts.length} 篇文章</p>

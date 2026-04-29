@@ -1,5 +1,6 @@
 ---
 import BaseLayout from './BaseLayout.astro';
+import { SITE_CONFIG } from '~/lib/constants';
 
 interface Props {
   title: string;
@@ -9,7 +10,7 @@ interface Props {
 const { title, description } = Astro.props;
 ---
 
-<BaseLayout title={`${title} | My Blog`} description={description}>
+<BaseLayout title={`${title} | ${SITE_CONFIG.title}`} description={description}>
   <main class="flex-1 w-full max-w-4xl mx-auto px-4 py-8">
     <div class="neo-card p-8 md:p-12">
       <h1 class="text-3xl md:text-4xl font-bold mb-8" style="font-family: 'Noto Serif SC', serif;">

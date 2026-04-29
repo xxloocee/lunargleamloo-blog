@@ -3,7 +3,7 @@ import PageLayout from '~/layouts/PageLayout.astro';
 import { SITE_CONFIG } from '~/lib/constants';
 ---
 
-<PageLayout title="关于我" description="了解更多关于我的信息">
+<PageLayout title="关于我" description="了解这个博客背后的人，以及这里准备长期写些什么">
   <div class="flex flex-col items-center text-center mb-8">
     <div class="w-24 h-24 rounded-full mb-4 flex items-center justify-center text-3xl" style="background: var(--neo-surface); border: var(--neo-border); box-shadow: var(--neo-shadow);">
       🧑‍💻
@@ -14,7 +14,25 @@ import { SITE_CONFIG } from '~/lib/constants';
 
   <hr class="my-8" style="border-color: var(--neo-border-color);" />
 
-  <p>这是关于页的占位内容，暂时还没有想好写什么。</p>
+  <p>
+    你好，我是 {SITE_CONFIG.author.name}。这里是我的个人博客，也是我整理技术实践、AI 工作流、阅读笔记和一些零散思考的地方。
+  </p>
+
+  <p>
+    我喜欢那种既能落地、又带一点表达欲的内容：既写项目实现，也写做事判断；既记录怎么搭系统，也记录为什么这么搭。
+    如果一篇文章最后只剩下“我用了什么框架”，那总觉得差了点活人感。
+  </p>
+
+  <p>
+    这个站点本身也是我的长期试验田。我会在这里持续折腾博客结构、设计系统、内容组织方式，以及和 AI 协作写作、开发的各种可能性。
+  </p>
+
+  <h2>这里大概会写什么</h2>
+  <ul>
+    <li>技术实现与工程化经验</li>
+    <li>AI / Agent / workflow 相关实践</li>
+    <li>论文、知识与一些值得认真展开的思考</li>
+  </ul>
 
   <h2>联系方式</h2>
   <ul>

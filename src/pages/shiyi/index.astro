@@ -1,6 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import BaseLayout from "~/layouts/BaseLayout.astro";
+import { SITE_CONFIG } from '~/lib/constants';
 import { formatDate } from "~/lib/utils";
 
 const items = (await getCollection("shiyi")).sort(
@@ -9,7 +10,7 @@ const items = (await getCollection("shiyi")).sort(
 ---
 
 <BaseLayout
-  title="拾遗 | My Blog"
+  title={`拾遗 | ${SITE_CONFIG.title}`}
   description="拾遗补缺，收录值得反复咀嚼的好内容"
 >
   <main class="flex-1 w-full max-w-4xl mx-auto px-4 py-8">
