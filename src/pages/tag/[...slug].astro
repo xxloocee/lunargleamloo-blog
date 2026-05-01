@@ -29,7 +29,7 @@ const posts = allPosts
 
     <div class="space-y-4">
       {posts.map((post) => (
-        <a href={`/blog/${post.id}`} class="neo-card neo-hover p-6 block" style="color: var(--text-primary);">
+          <a href={`/blog/${post.id}`} class="neo-card neo-hover p-6 block" style="color: var(--text-primary);">
           <time class="text-xs" style="color: var(--text-tertiary);">{formatDate(post.data.pubDate)}</time>
           <h2 class="text-xl font-semibold mt-1 mb-2">{post.data.title}</h2>
           <p class="text-sm" style="color: var(--text-secondary);">{post.data.description}</p>

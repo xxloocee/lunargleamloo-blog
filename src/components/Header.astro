@@ -12,6 +12,16 @@ const navLinks = [
   { href: "/shiyi", label: "拾遗" },
   { href: "/about", label: "关于" },
 ];
+
+const pathname = Astro.url.pathname;
+
+function isActive(href: string) {
+  if (href === "/") return pathname === "/";
+  if (href === "/blog") return pathname.startsWith("/blog");
+  if (href === "/category") return pathname.startsWith("/category");
+  if (href === "/shiyi") return pathname.startsWith("/shiyi");
+  return pathname === href;
+}
 ---
 
 <header
@@ -33,7 +43,8 @@ const navLinks = [
         navLinks.map((link) => (
           <a
             href={link.href}
-            class="nav-link text-sm font-semibold px-3 py-1.5 rounded-lg transition-colors"
+            class={`nav-link neo-chip text-sm font-semibold px-3 py-1.5 ${isActive(link.href) ? "is-active" : ""}`}
+            aria-current={isActive(link.href) ? "page" : undefined}
             style="color: var(--text-primary);"
           >
             {link.label}
@@ -43,8 +54,8 @@ const navLinks = [
       <SearchTrigger />
       <button
         id="dark-mode-toggle"
-        class="ml-2 w-9 h-9 flex items-center justify-center rounded-full font-bold text-sm transition-colors"
-        style="border: var(--neo-border); background: var(--neo-surface-alt);"
+        class="neo-chip ml-2 w-9 h-9 font-bold text-sm"
+        style="background: var(--neo-surface-alt);"
         aria-label="切换深色模式"
       >
         🌓
@@ -56,16 +67,16 @@ const navLinks = [
       <SearchTrigger />
       <button
         id="dark-mode-toggle-mobile"
-        class="w-9 h-9 flex items-center justify-center rounded-full text-sm"
-        style="border: var(--neo-border); background: var(--neo-surface-alt);"
+        class="neo-chip w-9 h-9 text-sm"
+        style="background: var(--neo-surface-alt);"
         aria-label="切换深色模式"
       >
         🌓
       </button>
       <button
         id="mobile-menu-toggle"
-        class="w-9 h-9 flex items-center justify-center rounded-full text-xl font-bold"
-        style="border: var(--neo-border); background: var(--neo-surface-alt);"
+        class="neo-chip w-9 h-9 text-xl font-bold"
+        style="background: var(--neo-surface-alt);"
         aria-label="打开菜单"
       >
         ☰
@@ -83,7 +94,8 @@ const navLinks = [
       navLinks.map((link) => (
         <a
           href={link.href}
-          class="block py-2 px-3 text-sm font-semibold rounded-lg transition-colors"
+          class={`block py-2 px-3 text-sm font-semibold rounded-lg transition-colors ${isActive(link.href) ? "mobile-link-active" : ""}`}
+          aria-current={isActive(link.href) ? "page" : undefined}
           style="color: var(--text-primary);"
         >
           {link.label}
@@ -97,6 +109,18 @@ const navLinks = [
 <style>
   .nav-link:hover {
     background: var(--accent-orange);
+    color: var(--text-primary);
+  }
+
+  .nav-link.is-active {
+    background: var(--accent-orange);
+    box-shadow: var(--neo-shadow);
+  }
+
+  .mobile-link-active {
+    background: var(--neo-surface-alt);
+    border: var(--neo-border);
+    box-shadow: var(--neo-shadow-sm);
   }
 </style>
 

@@ -1,0 +1,107 @@
+<script is:inline>
+  (function () {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    var cards = Array.prototype.slice.call(
+      document.querySelectorAll(".neo-hover[data-tilt]"),
+    );
+
+    if (!cards.length) return;
+
+    cards.forEach(function (card) {
+      var rafId = 0;
+      var active = false;
+      var pointerX = 0;
+      var pointerY = 0;
+      var leaveTolerance = 10;
+      var strength = card.dataset.tiltStrength || "soft";
+      var config =
+        strength === "subtle"
+          ? { rotateX: 4.25, rotateY: 5, scale: 1.006, lift: 2.5 }
+          : { rotateX: 6, rotateY: 7, scale: 1.01, lift: 3 };
+
+      function isInsideRect(x, y, rect) {
+        return (
+          x >= rect.left - leaveTolerance &&
+          x <= rect.right + leaveTolerance &&
+          y >= rect.top - leaveTolerance &&
+          y <= rect.bottom + leaveTolerance
+        );
+      }
+
+      function updateFrame() {
+        if (!active) return;
+
+        var rect = card.getBoundingClientRect();
+        if (!rect.width || !rect.height) return;
+
+        var rawX = pointerX - rect.left;
+        var rawY = pointerY - rect.top;
+        var ratioX = Math.min(Math.max(rawX / rect.width, 0), 1);
+        var ratioY = Math.min(Math.max(rawY / rect.height, 0), 1);
+
+        var rotateY = (ratioX - 0.5) * config.rotateY * 2;
+        var rotateX = (0.5 - ratioY) * config.rotateX * 2;
+
+        card.style.setProperty("--tilt-x", ratioX * 100 + "%");
+        card.style.setProperty("--tilt-y", ratioY * 100 + "%");
+        card.style.transform =
+          "perspective(960px) translate(-" +
+          config.lift +
+          "px, -" +
+          config.lift +
+          "px) rotateX(" +
+          rotateX.toFixed(2) +
+          "deg) rotateY(" +
+          rotateY.toFixed(2) +
+          "deg) scale(" +
+          config.scale +
+          ")";
+
+        rafId = requestAnimationFrame(updateFrame);
+      }
+
+      function onPointerMove(e) {
+        pointerX = e.clientX;
+        pointerY = e.clientY;
+      }
+
+      function startTilt(e) {
+        if (e.pointerType === "touch" || active) return;
+
+        active = true;
+        pointerX = e.clientX;
+        pointerY = e.clientY;
+        card.classList.add("is-tilting");
+        window.addEventListener("pointermove", onPointerMove, { passive: true });
+        rafId = requestAnimationFrame(updateFrame);
+      }
+
+      function stopTilt() {
+        active = false;
+        card.classList.remove("is-tilting");
+        card.style.transform = "";
+        card.style.removeProperty("--tilt-x");
+        card.style.removeProperty("--tilt-y");
+        if (rafId) cancelAnimationFrame(rafId);
+        rafId = 0;
+        window.removeEventListener("pointermove", onPointerMove);
+      }
+
+      function onPointerLeave(e) {
+        pointerX = e.clientX;
+        pointerY = e.clientY;
+
+        requestAnimationFrame(function () {
+          var rect = card.getBoundingClientRect();
+          if (!isInsideRect(pointerX, pointerY, rect)) stopTilt();
+        });
+      }
+
+      card.addEventListener("pointerenter", startTilt);
+      card.addEventListener("pointerleave", onPointerLeave);
+      card.addEventListener("pointercancel", stopTilt);
+      card.addEventListener("blur", stopTilt);
+    });
+  })();
+</script>

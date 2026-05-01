@@ -4,6 +4,7 @@ import Header from "~/components/Header.astro";
 import Footer from "~/components/Footer.astro";
 import SeoHead from "~/components/SeoHead.astro";
 import Decorations from "~/components/Decorations.astro";
+import TiltEffects from "~/components/TiltEffects.astro";
 import "~/styles/global.css";
 
 interface Props {
@@ -145,6 +146,7 @@ const {
         mainScroll.scrollTo({ top: 0, behavior: "smooth" });
       });
     </script>
+    <TiltEffects />
     {SITE_CONFIG.cfAnalyticsToken && (
       <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon={`{"token": "${SITE_CONFIG.cfAnalyticsToken}"}`}></script>
     )}
